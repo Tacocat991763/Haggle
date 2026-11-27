@@ -30,7 +30,7 @@ loss = torch.tensor(float("inf"))
 epoch = 0
 
 model.train()
-while loss.item() > 50:
+while loss.item() > 20:
   predictions = model(X)
   loss = loss_fn(predictions, Y)
 

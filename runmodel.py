@@ -40,7 +40,7 @@ model = nn.Sequential(
 )
 
 model.load_state_dict(
-    torch.load("model_2026-11-27_00-51-24.pth", weights_only=True)
+    torch.load("model_2026-11-27_01-03-47.pth", weights_only=True)
 )
 
 model.eval()
