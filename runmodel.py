@@ -20,6 +20,13 @@ Y = torch.tensor(
     dtype=torch.float32
 ).unsqueeze(1)
 
+Z = torch.tensor(inputs.iloc[-1:].to_numpy(), dtype=torch.float32)
+
+W = torch.tensor(
+    df["hours_spent"].iloc[-1:].to_numpy(),
+    dtype=torch.float32
+).unsqueeze(1)
+
 def rmsle(predictions, targets):
     predictions = torch.clamp(predictions, min=0)
 
@@ -40,13 +47,13 @@ model = nn.Sequential(
 )
 
 model.load_state_dict(
-    torch.load("rescued_model.pth", weights_only=True)
+    torch.load("model_2026-11-27_10-11-47.pth", weights_only=True)
 )
 
 model.eval()
 
 with torch.no_grad():
-    predictions = model(X)
-    score = rmsle(predictions, Y)
+    predictions = model(Z)
+    score = rmsle(predictions, W)
 
 print("RMSLE:", score.item())
