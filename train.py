@@ -3,6 +3,7 @@ import pandas as pd
 import torch
 from torch import nn
 import logging
+from pathlib import Path
 
 logging.basicConfig(
     filename="logs.txt",
@@ -131,8 +132,9 @@ try:
             )
 
         if epoch % 1000 == 0:
+            Path("outputs").mkdir(exist_ok=True)
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            filename = f"model_{timestamp}.pth"
+            filename = f"outputs/model_{timestamp}.pth"
             torch.save(model.state_dict(), filename)
             print(f"Saved model to {filename} at epoch {epoch}")
             logging.info(f"Saved model to {filename} at epoch {epoch}")
@@ -147,10 +149,14 @@ print(W)
 with torch.no_grad():
   print(model(Z))
 
+Path("outputs").mkdir(exist_ok=True)
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-filename = f"model_{timestamp}.pth"
+filename = f"outputs/model_{timestamp}.pth"
 torch.save(model.state_dict(), filename)
 print(f"Saved model to {filename}")
+logging.info(f"Saved model to {filename}")
+logging.info("Program finished")
+
 
 with torch.no_grad():
     predictions = model(Z)
