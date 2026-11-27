@@ -65,7 +65,13 @@ X = torch.tensor(
 )
 
 model = nn.Sequential(
-
+    nn.Linear(X.shape[1], 128),
+    nn.ReLU(),
+    nn.Dropout(0.25),
+    nn.Linear(128, 64),
+    nn.ReLU(),
+    nn.Linear(64, 1),
+    nn.Softplus()
 )
 
 model.load_state_dict(
