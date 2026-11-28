@@ -3,3 +3,14 @@
 __pycache__/
 outputs/
 catboost_info/
+*.tmp
+predictions.csv
+# reassembled at runtime from the committed .partNN files (GitHub 100MB limit)
+models/tabdpt/tabdpt.safetensors
+models/tabicl/tabicl-regressor-v2-20260212.ckpt
+# TabPFN v2 was evaluated but is not part of the submission
+models/tabpfn/
+experiments/oof/
+experiments/optuna.db
+experiments/*.log
+.DS_Store

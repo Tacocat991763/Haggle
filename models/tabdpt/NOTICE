@@ -1,0 +1,3 @@
+TabDPT 1.3 model weights (tabdpt1_3.safetensors) by Layer 6 AI, https://huggingface.co/Layer6/TabDPT
+Licensed under the Apache License 2.0 (see LICENSE). Stored unmodified, split into <100MB parts;
+src/pipeline.py reassembles them into tabdpt.safetensors at runtime.

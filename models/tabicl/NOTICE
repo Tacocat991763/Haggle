@@ -1,0 +1,3 @@
+TabICL v2 regressor checkpoint (tabicl-regressor-v2-20260212.ckpt), https://huggingface.co/jingang/TabICL
+TabICL is released under the BSD 3-Clause License (see LICENSE). Stored unmodified, split into <100MB parts;
+src/pipeline.py reassembles them at runtime.

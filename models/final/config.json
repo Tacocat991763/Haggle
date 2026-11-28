@@ -1,0 +1,75 @@
+{
+ "members": [
+  {
+   "name": "xgb_log_missing_ratio_rel_interact_tuned",
+   "source": "xgb_log+missing+ratio+rel+interact_tuned",
+   "model": "xgb",
+   "params": {
+    "n_estimators": 1393,
+    "learning_rate": 0.005904554989853672,
+    "max_depth": 7,
+    "min_child_weight": 9.307992045510241,
+    "subsample": 0.4856172727636531,
+    "colsample_bytree": 0.6593366194985539,
+    "reg_lambda": 0.23212984917989699,
+    "reg_alpha": 0.06712878303220293,
+    "gamma": 0.0019551716868804357
+   },
+   "families": [
+    "interact",
+    "log",
+    "missing",
+    "ratio",
+    "rel"
+   ],
+   "keep_raw_skewed": true,
+   "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "weight": 0.556,
+   "kind": "saved"
+  },
+  {
+   "name": "tabdpt_log",
+   "source": "tabdpt_log",
+   "model": "tabdpt",
+   "params": {},
+   "families": [
+    "log"
+   ],
+   "keep_raw_skewed": false,
+   "seeds": [
+    0
+   ],
+   "weight": 0.314,
+   "kind": "icl"
+  },
+  {
+   "name": "tabicl_logratio_n4",
+   "source": "tabicl_logratio_n4",
+   "model": "tabicl",
+   "params": {
+    "n_estimators": 4,
+    "batch_size": 1
+   },
+   "families": [
+    "log",
+    "ratio"
+   ],
+   "keep_raw_skewed": false,
+   "seeds": [
+    0
+   ],
+   "weight": 0.129,
+   "kind": "icl"
+  }
+ ],
+ "clip": [
+  0.1,
+  140.7
+ ]
+}

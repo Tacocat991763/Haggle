@@ -1,1 +1,7 @@
-torch
+# pandas, numpy, scikit-learn, xgboost, lightgbm and catboost are preinstalled in the evaluation image.
+# CPU-only PyTorch wheels (avoids the multi-GB CUDA build on Linux).
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0+cpu ; sys_platform == "linux"
+torch==2.15.0 ; sys_platform != "linux"
+tabdpt==1.3.2
+tabicl==2.2.0

@@ -1,59 +1,39 @@
-import torch
-import torch.nn as nn
 import pandas as pd
+import numpy as np
+from catboost import CatBoostRegressor
+
+model = CatBoostRegressor()
+model.load_model("model_BEST.cbm")
 
 df = pd.read_csv("train.csv")
 
-numerical = df.select_dtypes(include="number")
+inputs = df[model.feature_names_].copy()
 
-inputs = numerical.drop(columns=["hours_spent", "log_hours"])
-
-inputs = inputs.fillna(inputs.median()).fillna(0)
-
-X = torch.tensor(
-    inputs.to_numpy(),
-    dtype=torch.float32
-)
-
-Y = torch.tensor(
-    df["hours_spent"].to_numpy(),
-    dtype=torch.float32
-).unsqueeze(1)
-
-Z = torch.tensor(inputs.iloc[-1:].to_numpy(), dtype=torch.float32)
-
-W = torch.tensor(
-    df["hours_spent"].iloc[-1:].to_numpy(),
-    dtype=torch.float32
-).unsqueeze(1)
-
-def rmsle(predictions, targets):
-    predictions = torch.clamp(predictions, min=0)
-
-    return torch.sqrt(
-        torch.mean(
-            (torch.log1p(predictions) - torch.log1p(targets)) ** 2
-        )
+for index in model.get_cat_feature_indices():
+    column = inputs.columns[index]
+    inputs[column] = (
+        inputs[column]
+        .astype("string")
+        .fillna("__MISSING__")
+        .astype(str)
     )
 
-model = nn.Sequential(
-    nn.Linear(45,500),
-    nn.ReLU(),
-    nn.Linear(500,500),
-    nn.ReLU(),
-    nn.Linear(500,500),
-    nn.ReLU(),
-    nn.Linear(500, 1)
+split = int(len(df) * 0.8)
+
+Z = inputs.iloc[split:]
+W = df["hours_spent"].iloc[split:].to_numpy()
+
+predictions = np.maximum(
+    np.expm1(model.predict(Z)),
+    0
 )
 
-model.load_state_dict(
-    torch.load("model_2026-11-27_10-11-47.pth", weights_only=True)
+score = np.sqrt(
+    np.mean(
+        (np.log1p(predictions) - np.log1p(W)) ** 2
+    )
 )
 
-model.eval()
-
-with torch.no_grad():
-    predictions = model(Z)
-    score = rmsle(predictions, W)
-
-print("RMSLE:", score.item())
+print("Predictions:", predictions)
+print("Actual:", W)
+print("RMSLE:", score)

@@ -1,0 +1,10 @@
+import sys, os; sys.path.insert(0, ".")
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+from src.runner import run
+L = dict(families=("log",), keep_raw_skewed=False)
+run("tabdpt_log_e16", "tabdpt", {"n_ensembles": 16}, note="16 ensembles", **L)
+run("tabdpt_log_qn", "tabdpt", {"normalizer": "quantile-normal"}, note="quantile-normal", **L)
+run("tabdpt_log_robust", "tabdpt", {"normalizer": "robust"}, note="robust norm", **L)
+run("tabdpt_logmiss", "tabdpt", {}, families=("log", "missing"), keep_raw_skewed=False, note="log+missing")
+run("tabdpt_log_nocodes", "tabdpt", {"codes": False}, note="TE only, no ordinal codes", **L)
+run("tabdpt_log_s3", "tabdpt", {}, seeds=(0, 1, 2), note="3 seeds", **L)
